@@ -1,98 +1,198 @@
+import {
+  PlayfairDisplay_700Bold,
+  PlayfairDisplay_700Bold_Italic,
+  PlayfairDisplay_800ExtraBold,
+  useFonts,
+} from '@expo-google-fonts/playfair-display';
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { ChevronUp } from 'lucide-react-native';
+import React from 'react';
+import {
+  Pressable,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+const blurhash =
+  '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+interface HomeScreenProps {
+  onStart?: () => void;
+  onMenu?: () => void;
+}
 
-export default function HomeScreen() {
+export default function HomeScreen({ onStart, onMenu }: HomeScreenProps) {
+  let [fontsLoaded] = useFonts({
+    PlayfairDisplay_700Bold,
+    PlayfairDisplay_700Bold_Italic,
+    PlayfairDisplay_800ExtraBold,
+  });
+
+
+  const slide = {
+    image: require('../../assets/images/bg1.jpg'),
+    // title: 'Welcome to',
+    // subtitle: 'Beni Mellal',
+  };
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <ScrollView style={{ flex: 1 }}>
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" />
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+   
+      <View style={styles.backgroundContainer}>
+        <Image
+          source={slide.image}
+          style={styles.backgroundImage}
+          placeholder={{ blurhash }}
+          contentFit="cover"
+          transition={1000}
+        />
+        <View style={styles.overlay} />
+      </View>
+
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.logoSection}>
+          <Text style={styles.welcomeText}>Welcome to Beni Mellal!</Text>
+          <Text style={styles.appTitle}>
+            Where nature, culture, and hospitality meet.
+          </Text>
+        </View>
+        <View style={styles.buttonsContainer}>
+          <ChevronUp color="#bfbdbdff" size={48} />
+          <Pressable
+            style={styles.secondaryButton}
+            onPress={onMenu || onStart}
+            android_ripple={{ color: '#FDE68A' }}
+          >
+            <Text style={styles.buttonText}>Start</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
+    </View>
+
+    </ScrollView>
+
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
+  container: { flex: 1 },
+  backgroundContainer: {
     position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+  backgroundImage: {
+    width: '100%',
+    height: '100%',
+  },
+  overlay: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  content: {
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 60,
+    paddingHorizontal: 24,
+  },
+  logoSection: {
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  welcomeText: {
+    fontSize: 36,
+    fontFamily: 'PlayfairDisplay_700Bold',
+    color: '#ffffffff',
+    marginBottom: 8,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10,
+  },
+  appTitle: {
+    fontSize: 20,
+    fontFamily: 'PlayfairDisplay_800ExtraBold',
+    color: '#ffffffff',
+    fontStyle: 'italic',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -2, height: 2 },
+    textShadowRadius: 15,
+  },
+  slideTextContainer: {
+    alignItems: 'center',
+    marginBottom: 32,
+    minHeight: 140,
+  },
+  slideTitle: {
+    fontSize: 36,
+    fontFamily: 'PlayfairDisplay_700Bold',
+    color: '#FEF3C7',
+    marginBottom: 8,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10,
+  },
+  slideSubtitle: {
+    fontSize: 64,
+    fontFamily: 'PlayfairDisplay_700Bold_Italic',
+    color: '#FCD34D',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -2, height: 2 },
+    textShadowRadius: 15,
+  },
+  buttonsContainer: {
+    width: '100%',
+    maxWidth: 100,
+    gap: 40,
+    marginTop: 500,
+    alignItems: 'center',
+    padding: 20,
+    height: 200,
+    backgroundColor: "rgba(132, 131, 131, 0.6)",
+    justifyContent: "flex-end",
+    borderRadius: 80,
+    paddingBottom: 10,
+
+    
+  },
+  primaryButton: {
+    backgroundColor: '#FCD34D',
+    paddingVertical: 20,
+    borderRadius: 24,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  secondaryButton: {
+      width: 80,
+    height: 80,
+    backgroundColor: "#7B3F00",
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
+
+  },
+  buttonText: {
+    fontSize: 25,
+    fontFamily: "PlayfairDisplay_700Bold",
+    color: '#ffffffff',
+    alignItems: 'center',
   },
 });
