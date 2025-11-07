@@ -1,9 +1,16 @@
-// Attractions.tsx
-import { FontAwesome } from '@expo/vector-icons'; // <-- Import FontAwesome
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+import { FontAwesome } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
 export type Attraction = {
   id: string;
@@ -12,34 +19,111 @@ export type Attraction = {
   image: any;
 };
 
-export type RootStackParamList = {
-  Attractions: undefined;
-  AttractionDetails: { attraction: Attraction };
-};
-
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Attractions'>;
-
 const attractionsData: Attraction[] = [
-  { id: '1', title: 'Lac Bin El Ouidane', description: 'A stunning man-made lake with azure waters', image: require('../../assets/aze.jpg') },
-  { id: '2', title: 'Cascades d’Ouzoud', description: 'Morocco’s most spectacular waterfalls', image: require('../../assets/ouzoud.jpg') },
-  { id: '3', title: 'Kasbah Ras El Ain', description: 'An ancient fortress overlooking the city', image: require('../../assets/lbohayra.jpg') },
-  { id: '4', title: 'Souk', description: 'Traditional market with crafts and foods', image: require('../../assets/Souk.jpg') },
-  { id: '5', title: 'Kasbah Kal3a', description: 'Historic kasbah with beautiful views', image: require('../../assets/kal3a.jpg') },
-  { id: '6', title: 'Ain Asserdoun', description: 'Natural spring with scenic surroundings', image: require('../../assets/ainassardon.webp') },
+  { 
+    id: '1', 
+    title: 'Lac Bin El Ouidane', 
+    description: 'A stunning man-made lake with azure waters', 
+    image: require('../assets/images/aze.jpg') 
+  },
+  { 
+    id: '2', 
+    title: 'Cascades d\'Ouzoud', 
+    description: 'Morocco\'s most spectacular waterfalls', 
+    image: require('../assets/images/ouzoud.jpg') 
+  },
+  { 
+    id: '3', 
+    title: 'Kasbah Ras El Ain', 
+    description: 'An ancient fortress overlooking the city', 
+    image: require('../assets/images/lbohayra.jpg') 
+  },
+  { 
+    id: '4', 
+    title: 'Souk', 
+    description: 'Traditional market with crafts and foods', 
+    image: require('../assets/images/Souk.jpg') 
+  },
+  { 
+    id: '5', 
+    title: 'Kasbah Kal3a', 
+    description: 'Historic kasbah with beautiful views', 
+    image: require('../assets/images/kal3a.jpg') 
+  },
+  { 
+    id: '6', 
+    title: 'Ain Asserdoun', 
+    description: 'Natural spring with scenic surroundings', 
+    image: require('../assets/images/ainassardon.webp') 
+  },
 ];
 
-function Attractions() {
+export default function Attractions() {
   const [searchText, setSearchText] = useState('');
-  
-  // <-- State to track liked cards
   const [likedIds, setLikedIds] = useState<string[]>([]);
 
-  const navigation = useNavigation<NavigationProp>();
+  const router = useRouter();
+
+  const handleNavigateToDetails = (attraction: Attraction) => {
+   
+    router.push({
+      pathname: '/details',
+      params: { 
+        attractionId: attraction.id,
+        title: attraction.title,
+        description: attraction.description,
+      }
+    });
+  };
+
+  const toggleLike = (id: string) => {
+    if (likedIds.includes(id)) {
+      setLikedIds(prev => prev.filter(itemId => itemId !== id));
+    } else {
+      setLikedIds(prev => [...prev, id]);
+    }
+  };
+
+  const renderItem = ({ item }: { item: Attraction }) => {
+    const isLiked = likedIds.includes(item.id);
+
+    return (
+      <TouchableOpacity
+        style={styles.card}
+        activeOpacity={0.8}
+        onPress={() => handleNavigateToDetails(item)}
+      >
+        <Image source={item.image} style={styles.image} />
+        <View style={styles.infoBox}>
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.description}>{item.description}</Text>
+
+          {/* Heart icon */}
+          <TouchableOpacity 
+            onPress={() => toggleLike(item.id)} 
+            style={styles.heartButton}
+          >
+            <FontAwesome 
+              name="heart" 
+              size={24} 
+              color={isLiked ? "red" : "white"} 
+            />
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
-      {/* Title and Search */}
+    
       <Text style={styles.titre}>Discover</Text>
+        <TouchableOpacity 
+                  style={styles.backButton} 
+                  onPress={() => router.back()}
+                >
+                  <FontAwesome name="arrow-left" size={24} color="#fff" />
+                </TouchableOpacity>
       <TextInput
         style={styles.searchInput}
         placeholder="Search..."
@@ -51,46 +135,18 @@ function Attractions() {
       {/* Attraction categories list */}
       <View style={styles.attractionList}>
         <Text style={styles.attractionItem}>Cascades</Text>
-        <Text style={styles.attractionItem}>Lakes</Text>
+        <Text style={styles.attractionItem}>Lacs</Text>
         <Text style={styles.attractionItem}>Forest</Text>
         <Text style={styles.attractionItem}>Kasbah</Text>
       </View>
 
       {/* Attraction cards list */}
-      <FlatList<Attraction>
+      <FlatList
         data={attractionsData}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          const isLiked = likedIds.includes(item.id);
-          const toggleLike = () => {
-            if (isLiked) {
-              setLikedIds(prev => prev.filter(id => id !== item.id));
-            } else {
-              setLikedIds(prev => [...prev, item.id]);
-            }
-          };
-
-          return (
-            <TouchableOpacity
-              style={styles.card}
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('AttractionDetails', { attraction: item })}
-            >
-              <Image source={item.image} style={styles.image} />
-              <View style={styles.infoBox}>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.description}>{item.description}</Text>
-
-                {/* Heart icon */}
-                <TouchableOpacity onPress={toggleLike} style={styles.heartButton}>
-                  <FontAwesome name="heart" size={24} color={isLiked ? "red" : "white"} />
-                </TouchableOpacity>
-              </View>
-            </TouchableOpacity>
-          );
-        }}
+        renderItem={renderItem}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 0.3 }}
+        contentContainerStyle={{ paddingBottom: 30 }}
       />
     </View>
   );
@@ -108,8 +164,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#000',
-    marginTop: 30,
-    marginLeft: '2%',
+    marginTop: 10,
+    marginLeft: '30%',
+    fontFamily: 'PlayfairDisplay_700Bold',
+    justifyContent: 'center',
+    alignItems: 'center',
+
   },
   searchInput: {
     backgroundColor: '#d4a473ff',
@@ -173,12 +233,17 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#000000ff',
   },
-  // Style for heart icon
   heartButton: {
     position: 'absolute',
     top: 10,
     right: 10,
   },
+    backButton: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    padding: 12,
+    borderRadius: 25,
+  }
 });
-
-export default Attractions;
