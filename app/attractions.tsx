@@ -20,12 +20,12 @@ export type RootStackParamList = {
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Attractions'>;
 
 const attractionsData: Attraction[] = [
-  { id: '1', title: 'Lac Bin El Ouidane', description: 'A stunning man-made lake with azure waters', image: require('../../assets/aze.jpg') },
-  { id: '2', title: 'Cascades d’Ouzoud', description: 'Morocco’s most spectacular waterfalls', image: require('../../assets/ouzoud.jpg') },
-  { id: '3', title: 'Kasbah Ras El Ain', description: 'An ancient fortress overlooking the city', image: require('../../assets/lbohayra.jpg') },
-  { id: '4', title: 'Souk', description: 'Traditional market with crafts and foods', image: require('../../assets/Souk.jpg') },
-  { id: '5', title: 'Kasbah Kal3a', description: 'Historic kasbah with beautiful views', image: require('../../assets/kal3a.jpg') },
-  { id: '6', title: 'Ain Asserdoun', description: 'Natural spring with scenic surroundings', image: require('../../assets/ainassardon.webp') },
+  { id: '1', title: 'Lac Bin El Ouidane', description: 'A stunning man-made lake with azure waters', image: require('@/assets/images/aze.jpg') },
+  { id: '2', title: 'Cascades d’Ouzoud', description: 'Morocco’s most spectacular waterfalls', image: require('@/assets/images/ouzoud.jpg') },
+  { id: '3', title: 'Kasbah Ras El Ain', description: 'An ancient fortress overlooking the city', image: require('@/assets/images/lbohayra.jpg') },
+  { id: '4', title: 'Souk', description: 'Traditional market with crafts and foods', image: require('@/assets/images/Souk.jpg') },
+  { id: '5', title: 'Kasbah Kal3a', description: 'Historic kasbah with beautiful views', image: require('@/assets/images/kal3a.jpg') },
+  { id: '6', title: 'Ain Asserdoun', description: 'Natural spring with scenic surroundings', image: require('@/assets/images/ainassardon.webp') },
 ];
 
 function Attractions() {

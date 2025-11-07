@@ -12,7 +12,9 @@ export default function TabLayout() {
 <GestureHandlerRootView style={{flex:1}}> 
    <Stack screenOptions={{headerShown:false}}>
       <Stack.Screen name="index"/>
+      <Stack.Screen name="attractions" options={{animation:"slide_from_right"}}/>
       <Stack.Screen name="explore" options={{animation:"slide_from_right"}}/>
+
    </Stack>
 </GestureHandlerRootView>
 

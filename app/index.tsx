@@ -35,7 +35,7 @@ export default function Welcome() {
   }, [fontsLoaded, fontError]);
 
   const navigateToHome = () => {
-    router.push("/explore");
+    router.push("/attractions");
   };
 
   const panGesture = Gesture.Pan()
