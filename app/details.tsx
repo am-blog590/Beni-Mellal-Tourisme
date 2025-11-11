@@ -3,14 +3,14 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    Image,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  Image,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -24,9 +24,10 @@ const attractionsData = [
     image: require('../assets/images/aze.jpg'),
     fullDesc: 'Lac Bin El Ouidane est un magnifique lac artificiel situé dans la province de Beni Mellal. Créé en 1953, ce lac offre des eaux turquoise cristallines entourées de montagnes majestueuses. C\'est un lieu parfait pour la pêche, les sports nautiques et la détente en famille. Le paysage spectaculaire attire des visiteurs du monde entier.',
     gallery: [
-      require('../assets/images/aze.jpg'),
-      require('../assets/images/aze.jpg'),
-      require('../assets/images/aze.jpg'),
+      require('../assets/images/bin-01.jpg'),
+      require('../assets/images/bin-02.jpg'),
+      require('../assets/images/bin-03.jpg'),
+      require('../assets/images/bin-04.jpg'),
     ]
   },
   { 
@@ -36,9 +37,10 @@ const attractionsData = [
     image: require('../assets/images/ouzoud.jpg'),
     fullDesc: 'Les Cascades d\'Ouzoud sont parmi les plus belles chutes d\'eau du Maroc, avec une hauteur impressionnante de 110 mètres. Situées dans le Moyen Atlas, elles offrent un spectacle naturel époustouflant. Vous pourrez observer des singes magots dans leur habitat naturel et profiter d\'une baignade rafraîchissante dans les bassins naturels.',
     gallery: [
-      require('../assets/images/ouzoud.jpg'),
-      require('../assets/images/ouzoud.jpg'),
-      require('../assets/images/ouzoud.jpg'),
+      require('../assets/images/ouzoud-01.jpg'),
+      require('../assets/images/ouzoud-02.jpg'),
+      require('../assets/images/ouzoud-03.jpg'),
+      require('../assets/images/ouzoud-04.jpg'),
     ]
   },
   { 
@@ -48,9 +50,10 @@ const attractionsData = [
     image: require('../assets/images/lbohayra.jpg'),
     fullDesc: 'La Kasbah Ras El Ain est une forteresse historique qui surplombe la ville de Beni Mellal. Cette ancienne citadelle offre une vue panoramique exceptionnelle sur la région. Construite au 17ème siècle, elle témoigne de l\'architecture militaire marocaine traditionnelle et de l\'histoire riche de la région.',
     gallery: [
-      require('../assets/images/lbohayra.jpg'),
-      require('../assets/images/lbohayra.jpg'),
-      require('../assets/images/lbohayra.jpg'),
+      require('../assets/images/lac-01.jpg'),
+      require('../assets/images/lac-02.jpg'),
+      require('../assets/images/lac-03.jpg'),
+      require('../assets/images/lac-04.jpg'),
     ]
   },
   { 
@@ -60,9 +63,10 @@ const attractionsData = [
     image: require('../assets/images/Souk.jpg'),
     fullDesc: 'Le Souk de Beni Mellal est un marché traditionnel vibrant où vous découvrirez l\'authenticité marocaine. Artisanat local, épices colorées, fruits frais et produits traditionnels s\'offrent à vous dans une atmosphère animée. C\'est l\'endroit idéal pour découvrir la culture locale et ramener des souvenirs uniques.',
     gallery: [
-      require('../assets/images/Souk.jpg'),
-      require('../assets/images/Souk.jpg'),
-      require('../assets/images/Souk.jpg'),
+      require('../assets/images/souk-01.jpg'),
+      require('../assets/images/souk-02.jpg'),
+      require('../assets/images/souk-03.jpg'),
+      require('../assets/images/souk-04.jpg'),
     ]
   },
   { 
@@ -72,9 +76,10 @@ const attractionsData = [
     image: require('../assets/images/kal3a.jpg'),
     fullDesc: 'La Kasbah Kal3a est un site historique impressionnant qui témoigne du passé glorieux de la région. Perchée sur une colline, elle offre des vues spectaculaires sur les plaines environnantes. Cette forteresse bien préservée est un exemple remarquable de l\'architecture défensive marocaine.',
     gallery: [
-      require('../assets/images/kal3a.jpg'),
-      require('../assets/images/kal3a.jpg'),
-      require('../assets/images/kal3a.jpg'),
+      require('../assets/images/kasba-01.jpg'),
+      require('../assets/images/kasba-02.jpg'),
+      require('../assets/images/kasba-03.jpg'),
+      require('../assets/images/kasba-04.jpg'),
     ]
   },
   { 
@@ -84,9 +89,10 @@ const attractionsData = [
     image: require('../assets/images/ainassardon.webp'),
     fullDesc: 'Ain Asserdoun est une source naturelle magnifique nichée dans un cadre verdoyant. L\'eau cristalline jaillit de la roche et crée un oasis de fraîcheur. C\'est un lieu prisé pour les pique-niques en famille et un point de départ idéal pour des randonnées dans la nature environnante.',
     gallery: [
-      require('../assets/images/ainassardon.webp'),
-      require('../assets/images/ainassardon.webp'),
-      require('../assets/images/ainassardon.webp'),
+      require('../assets/images/ain-01.jpg'),
+      require('../assets/images/ain-02.jpg'),
+      require('../assets/images/ain-03.jpg'),
+      require('../assets/images/ain-04.jpg'),
     ]
   },
 ];
